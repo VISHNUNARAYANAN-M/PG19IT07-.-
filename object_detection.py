@@ -198,37 +198,6 @@ plt.figure(figsize=(24,32))
 plt.imshow(image_np_with_detections[0])
 plt.show()
 
-# Handle models with masks:
-image_np_with_mask = image_np.copy()
 
-if 'detection_masks' in result:
-  # we need to convert np.arrays to tensors
-  detection_masks = tf.convert_to_tensor(result['detection_masks'][0])
-  detection_boxes = tf.convert_to_tensor(result['detection_boxes'][0])
-
-  # Reframe the bbox mask to the image size.
-  detection_masks_reframed = utils_ops.reframe_box_masks_to_image_masks(
-            detection_masks, detection_boxes,
-              image_np.shape[1], image_np.shape[2])
-  detection_masks_reframed = tf.cast(detection_masks_reframed > 0.5,
-                                      tf.uint8)
-  result['detection_masks_reframed'] = detection_masks_reframed.numpy()
-
-viz_utils.visualize_boxes_and_labels_on_image_array(
-      image_np_with_mask[0],
-      result['detection_boxes'][0],
-      (result['detection_classes'][0] + label_id_offset).astype(int),
-      result['detection_scores'][0],
-      category_index,
-      use_normalized_coordinates=True,
-      max_boxes_to_draw=200,
-      min_score_thresh=.30,
-      agnostic_mode=False,
-      instance_masks=result.get('detection_masks_reframed', None),
-      line_thickness=8)
-
-plt.figure(figsize=(24,32))
-plt.imshow(image_np_with_mask[0])
-plt.show()
 
 import cv2
