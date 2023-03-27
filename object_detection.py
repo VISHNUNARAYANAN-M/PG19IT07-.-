@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/19KKGUcMUsM3F3Rzu2ZQKq9ac78dqr-7j
 """
 
-!pip install -U "tensorflow>=2.5"
+!pip install  "tensorflow==2.11.0" "protobuf==3.19.6"
 
 import os
 import pathlib
